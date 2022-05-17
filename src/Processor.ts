@@ -29,7 +29,7 @@ export class Processor {
    * - Creates the mapped instruction set.
    */
   public constructor() {
-    this.registers = new Array(1).fill(0)
+    this.registers = new Array(4).fill(0)
     this.memory = new Array(16).fill(0)
 
     this.instructions = [
@@ -139,5 +139,20 @@ export class Processor {
    */
   public set acc(value: number) {
     this.registers[2] = byte(value)
+  }
+
+  /**
+   * The output register as a 8-bit clamped value.
+   */
+  public get out(): number {
+    return byte(this.registers[3])
+  }
+
+  /**
+   * Sets the output register value.
+   * - The provided value will be clamped by 8-bits.
+   */
+  public set out(value: number) {
+    this.registers[3] = byte(value)
   }
 }

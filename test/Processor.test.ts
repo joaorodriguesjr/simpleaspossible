@@ -121,6 +121,17 @@ processor.cycle()
 assert.equal(processor.acc, 0x000A)
 
 
+/**
+ * The output register should be a
+ * clamped 8-bit wide value.
+ */
+processor.out = 0x00A0
+assert.equal(processor.out, 0x00A0)
+
+processor.out = 0x0100
+assert.equal(processor.out, 0x0000)
+
+
 /*********************************************************/
 /*********************** END TESTS ***********************/
 /*********************************************************/
