@@ -35,7 +35,7 @@ export class Processor {
     this.instructions = [
       { mnemonic: 'NOP', execute: () => {            } },
       { mnemonic: 'LDA', execute: () => { this.lda() } },
-      { mnemonic: 'ADD', execute: () => {            } },
+      { mnemonic: 'ADD', execute: () => { this.add() } },
     ]
   }
 
@@ -56,6 +56,13 @@ export class Processor {
    */
   public lda(): void {
     this.acc = this.read(lo(this.ir))
+  }
+
+  /**
+   * Adds a memory stored value to the accumulator
+   */
+  public add(): void {
+    this.acc += this.read(lo(this.ir))
   }
 
   /**

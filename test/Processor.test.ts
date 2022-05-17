@@ -88,5 +88,25 @@ processor.write(0x000A, 0x00FF)
 processor.cycle()
 assert.equal(processor.acc, 0x00FF)
 
+
+/**
+ * The accumulator register should be incremented with
+ * the value of the memory address pointed by the high
+ * nibble of the instruction register.
+ */
+processor.pc = 0x0000
+processor.write(0x0000, 0x001A)
+processor.write(0x0001, 0x002B)
+processor.write(0x000A, 0x000F)
+processor.write(0x000B, 0x00F0)
+
+processor.cycle()
+processor.cycle()
+assert.equal(processor.acc, 0x00FF)
+
+
+/*********************************************************/
+/*********************** END TESTS ***********************/
+/*********************************************************/
 console.info('SUCCESS: ALL TESTS PASSED!!!')
 process.exit(0)
