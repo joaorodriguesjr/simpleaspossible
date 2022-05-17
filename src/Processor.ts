@@ -11,10 +11,17 @@ export class Processor {
   private memory: number[]
 
   /**
+   * The registers memory.
+   */
+  private registers: number[]
+
+  /**
    * Initializes the cpu.
-   * - Fills the 16-byte memory with zeros.
+   * - Creates zeroed registers.
+   * - Creates the memory with zeroed 16-bytes.
    */
   public constructor() {
+    this.registers = new Array(1).fill(0)
     this.memory = new Array(16).fill(0)
   }
 
@@ -39,5 +46,20 @@ export class Processor {
    */
   public write(address: number, value: number): void {
     this.memory[nibble(address)] = byte(value)
+  }
+
+  /**
+   * The program counter as a 4-bit clamped value.
+   */
+  public get pc(): number {
+    return nibble(this.registers[0])
+  }
+
+  /**
+   * Sets the program counter value.
+   * - The provided value will be clamped by 4-bits.
+   */
+  public set pc(value: number) {
+    this.registers[0] = nibble(value)
   }
 }

@@ -11,3 +11,14 @@ assert.equal(processor.read(0x0001), 0x000A)
 
 processor.write(0x0002, 0x0100)
 assert.equal(processor.read(0x0002), 0x0000)
+
+
+/**
+ * The program counter register should be a
+ * clamped 4-bit wide value.
+ */
+ processor.pc = 0x000A
+ assert.equal(processor.pc, 0x000A)
+
+ processor.pc = 0x0010
+ assert.equal(processor.pc, 0x0000)
