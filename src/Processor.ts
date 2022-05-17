@@ -85,4 +85,19 @@ export class Processor {
   public set ir(value: number) {
     this.registers[1] = byte(value)
   }
+
+  /**
+   * The accumulator register as a 8-bit clamped value.
+   */
+  public get acc(): number {
+    return byte(this.registers[2])
+  }
+
+  /**
+   * Sets the accumulator register value.
+   * - The provided value will be clamped by 8-bits.
+   */
+  public set acc(value: number) {
+    this.registers[2] = byte(value)
+  }
 }

@@ -61,3 +61,14 @@ assert.equal(processor.ir, 0x00A0)
 
 processor.cycle()
 assert.equal(processor.ir, 0x00B0)
+
+
+/**
+ * The accumulator register should be a
+ * clamped 8-bit wide value.
+ */
+processor.acc = 0x00A0
+assert.equal(processor.acc, 0x00A0)
+
+processor.acc = 0x0100
+assert.equal(processor.acc, 0x0000)
