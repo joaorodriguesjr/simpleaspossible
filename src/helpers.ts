@@ -5,7 +5,7 @@
  * @returns 8-bit wide clamped value
  */
 export function byte(value: number): number {
-  return value & 0xFF;
+  return value & 0xFF
 }
 
 /**
@@ -15,7 +15,7 @@ export function byte(value: number): number {
  * @returns 4-bit wide clamped value
  */
 export function nibble(value: number): number {
-  return value & 0x0F;
+  return value & 0x0F
 }
 
 /**
