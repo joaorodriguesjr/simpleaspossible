@@ -55,8 +55,8 @@ export class Processor {
 
     this.ir = this.read(this.pc)
 
-    const opcode = hi(this.ir)
-    this.operations[opcode]()
+    const operation = this.operations[this.opcode()]
+    operation()
 
     this.pc = this.pc + 1
   }
@@ -97,7 +97,16 @@ export class Processor {
   }
 
   /**
-   * Extracts a 4-bit wide address from the instruction register.
+   * Extracts a 4-bit wide opcode from the high nibble of the instruction register.
+   *
+   * @returns A 4-bit wide opcode.
+   */
+  public opcode(): number {
+    return hi(this.ir)
+  }
+
+  /**
+   * Extracts a 4-bit wide address from the low nibble of the instruction register.
    *
    * @returns A 4-bit wide address.
    */
