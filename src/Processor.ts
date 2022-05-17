@@ -1,7 +1,5 @@
 import { byte, nibble, hi, lo } from './helpers'
 
-type instruction = { mnemonic: string, execute: () => void }
-
 /**
  * The SAP-1 central processing unit.
  */
@@ -20,7 +18,7 @@ export class Processor {
   /**
    * The cpu instruction set.
    */
-  private instructions: instruction[]
+  private operations: (() => void)[]
 
   /**
    * Initializes the cpu.
@@ -32,12 +30,12 @@ export class Processor {
     this.registers = new Array(4).fill(0)
     this.memory = new Array(16).fill(0)
 
-    this.instructions = [
-      { mnemonic: 'NOP', execute: () => {            } },
-      { mnemonic: 'LDA', execute: () => { this.lda() } },
-      { mnemonic: 'ADD', execute: () => { this.add() } },
-      { mnemonic: 'SUB', execute: () => { this.sub() } },
-      { mnemonic: 'OUT', execute: () => { this.OUT() } },
+    this.operations = [
+      () => {        },
+      () => this.LDA(),
+      () => this.ADD(),
+      () => this.SUB(),
+      () => this.OUT(),
     ]
   }
 
@@ -48,7 +46,7 @@ export class Processor {
     this.ir = this.read(this.pc)
 
     const opcode = hi(this.ir)
-    this.instructions[opcode].execute()
+    this.operations[opcode]()
 
     this.pc = this.pc + 1
   }
@@ -56,21 +54,21 @@ export class Processor {
   /**
    * Loads the accumulator with a value stored on the memory
    */
-  public lda(): void {
+  public LDA(): void {
     this.acc = this.read(lo(this.ir))
   }
 
   /**
    * Adds a memory stored value to the accumulator
    */
-  public add(): void {
+  public ADD(): void {
     this.acc += this.read(lo(this.ir))
   }
 
   /**
    * Subtracts a memory stored value from the accumulator
    */
-  public sub(): void {
+  public SUB(): void {
     this.acc -= this.read(lo(this.ir))
   }
 
