@@ -29,8 +29,8 @@ assert.equal(processor.pc, 0x0000)
  * after each sucessful cycle.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x0001)
-processor.write(0x0001, 0x0002)
+processor.write(0x0000, 0x0040)
+processor.write(0x0001, 0x0040)
 
 processor.cycle()
 assert.equal(processor.pc, 0x0001)
@@ -55,14 +55,14 @@ assert.equal(processor.ir, 0x0000)
  * of the memory address pointed by the program counter.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x0001)
-processor.write(0x0001, 0x0002)
+processor.write(0x0000, 0x0040)
+processor.write(0x0001, 0x0040)
 
 processor.cycle()
-assert.equal(processor.ir, 0x0001)
+assert.equal(processor.ir, 0x0040)
 
 processor.cycle()
-assert.equal(processor.ir, 0x0002)
+assert.equal(processor.ir, 0x0040)
 
 
 /**
@@ -144,6 +144,22 @@ processor.write(0x000A, 0x00FF)
 processor.cycle()
 processor.cycle()
 assert.equal(processor.out, 0x00FF)
+
+
+/**
+ * No instruction should be executed after
+ * halting the processor.
+ */
+processor.pc = 0x0000
+processor.write(0x0000, 0x0000)
+processor.write(0x0001, 0x0040)
+processor.write(0x0001, 0x0040)
+
+processor.cycle()
+processor.cycle()
+processor.cycle()
+assert.equal(processor.pc, 0x0001)
+assert.ok(processor.halted)
 
 
 /*********************************************************/

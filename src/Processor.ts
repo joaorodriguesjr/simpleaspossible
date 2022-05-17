@@ -16,6 +16,11 @@ export class Processor {
   private registers: number[]
 
   /**
+   * The halting flag.
+   */
+  public halted: boolean
+
+  /**
    * The cpu instruction set.
    */
   private operations: (() => void)[]
@@ -30,8 +35,10 @@ export class Processor {
     this.registers = new Array(4).fill(0)
     this.memory = new Array(16).fill(0)
 
+    this.halted = false
+
     this.operations = [
-      () => {        },
+      () => this.HLT(),
       () => this.LDA(),
       () => this.ADD(),
       () => this.SUB(),
@@ -43,6 +50,9 @@ export class Processor {
    * Executes a machine cycle.
    */
   public cycle(): void {
+    if (this.halted)
+      return
+
     this.ir = this.read(this.pc)
 
     const opcode = hi(this.ir)
@@ -77,6 +87,13 @@ export class Processor {
    */
   public OUT(): void {
     this.out = this.acc
+  }
+
+  /**
+   * Halts the processor.
+   */
+  public HLT(): void {
+    this.halted = true
   }
 
   /**
