@@ -28,7 +28,9 @@ assert.equal(processor.pc, 0x0000)
  * The program counter shoud be incremented by 1
  * after each sucessful cycle.
  */
-processor.pc  = 0x0000
+processor.pc = 0x0000
+processor.write(0x0000, 0x0001)
+processor.write(0x0001, 0x0002)
 
 processor.cycle()
 assert.equal(processor.pc, 0x0001)
@@ -52,15 +54,15 @@ assert.equal(processor.ir, 0x0000)
  * The instruction register should receive the value
  * of the memory address pointed by the program counter.
  */
-processor.pc  = 0x0000
-processor.write(0x0000, 0x00A0)
-processor.write(0x0001, 0x00B0)
+processor.pc = 0x0000
+processor.write(0x0000, 0x0001)
+processor.write(0x0001, 0x0002)
 
 processor.cycle()
-assert.equal(processor.ir, 0x00A0)
+assert.equal(processor.ir, 0x0001)
 
 processor.cycle()
-assert.equal(processor.ir, 0x00B0)
+assert.equal(processor.ir, 0x0002)
 
 
 /**
@@ -72,3 +74,16 @@ assert.equal(processor.acc, 0x00A0)
 
 processor.acc = 0x0100
 assert.equal(processor.acc, 0x0000)
+
+
+/**
+ * The accumulator register should receive the value
+ * of the memory address pointed by the low nibble of
+ * the instruction register.
+ */
+ processor.pc = 0x0000
+ processor.write(0x0000, 0x001A)
+ processor.write(0x000A, 0x00FF)
+
+ processor.cycle()
+ assert.equal(processor.acc, 0x00FF)

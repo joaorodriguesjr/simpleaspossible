@@ -1,4 +1,6 @@
-import { byte, nibble } from './helpers'
+import { byte, nibble, hi, lo } from './helpers'
+
+type instruction = { mnemonic: string, execute: () => void }
 
 /**
  * The SAP-1 central processing unit.
@@ -16,13 +18,25 @@ export class Processor {
   private registers: number[]
 
   /**
+   * The cpu instruction set.
+   */
+  private instructions: instruction[]
+
+  /**
    * Initializes the cpu.
    * - Creates zeroed registers.
    * - Creates the memory with zeroed 16-bytes.
+   * - Creates the mapped instruction set.
    */
   public constructor() {
     this.registers = new Array(1).fill(0)
     this.memory = new Array(16).fill(0)
+
+    this.instructions = [
+      { mnemonic: 'NOP', execute: () => {            } },
+      { mnemonic: 'LDA', execute: () => { this.lda() } },
+      { mnemonic: 'ADD', execute: () => {            } },
+    ]
   }
 
   /**
@@ -30,7 +44,18 @@ export class Processor {
    */
   public cycle(): void {
     this.ir = this.read(this.pc)
+
+    const opcode = hi(this.ir)
+    this.instructions[opcode].execute()
+
     this.pc = this.pc + 1
+  }
+
+  /**
+   * Loads the accumulator with a value stored on the memory
+   */
+  public lda(): void {
+    this.acc = this.read(lo(this.ir))
   }
 
   /**
