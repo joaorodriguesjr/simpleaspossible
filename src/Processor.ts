@@ -65,21 +65,21 @@ export class Processor {
    * Loads the accumulator with a value stored on the memory
    */
   public LDA(): void {
-    this.acc = this.read(lo(this.ir))
+    this.acc = this.read(this.address())
   }
 
   /**
    * Adds a memory stored value to the accumulator
    */
   public ADD(): void {
-    this.acc += this.read(lo(this.ir))
+    this.acc += this.read(this.address())
   }
 
   /**
    * Subtracts a memory stored value from the accumulator
    */
   public SUB(): void {
-    this.acc -= this.read(lo(this.ir))
+    this.acc -= this.read(this.address())
   }
 
   /**
@@ -94,6 +94,15 @@ export class Processor {
    */
   public HLT(): void {
     this.halted = true
+  }
+
+  /**
+   * Extracts a 4-bit wide address from the instruction register.
+   *
+   * @returns A 4-bit wide address.
+   */
+  public address(): number {
+    return lo(this.ir)
   }
 
   /**
