@@ -46,3 +46,18 @@ assert.equal(processor.ir, 0x00A0)
 
 processor.ir = 0x0100
 assert.equal(processor.ir, 0x0000)
+
+
+/**
+ * The instruction register should receive the value
+ * of the memory address pointed by the program counter.
+ */
+processor.pc  = 0x0000
+processor.write(0x0000, 0x00A0)
+processor.write(0x0001, 0x00B0)
+
+processor.cycle()
+assert.equal(processor.ir, 0x00A0)
+
+processor.cycle()
+assert.equal(processor.ir, 0x00B0)

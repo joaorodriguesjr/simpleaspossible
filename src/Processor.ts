@@ -29,6 +29,7 @@ export class Processor {
    * Executes a machine cycle.
    */
   public cycle(): void {
+    this.ir = this.read(this.pc)
     this.pc = this.pc + 1
   }
 
