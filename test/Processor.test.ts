@@ -81,9 +81,12 @@ assert.equal(processor.acc, 0x0000)
  * of the memory address pointed by the low nibble of
  * the instruction register.
  */
- processor.pc = 0x0000
- processor.write(0x0000, 0x001A)
- processor.write(0x000A, 0x00FF)
+processor.pc = 0x0000
+processor.write(0x0000, 0x001A)
+processor.write(0x000A, 0x00FF)
 
- processor.cycle()
- assert.equal(processor.acc, 0x00FF)
+processor.cycle()
+assert.equal(processor.acc, 0x00FF)
+
+console.info('SUCCESS: ALL TESTS PASSED!!!')
+process.exit(0)
