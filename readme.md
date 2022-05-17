@@ -4,6 +4,5 @@ architecture virtual machine with the purpose of understand how a CPU works unde
 ### Run unit tests
 
 ```sh
-npm install
-npx ts-node test/helpers.test.ts && npx ts-node test/Processor.test.ts
+npm install && npm test
 ```
