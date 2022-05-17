@@ -35,3 +35,14 @@ assert.equal(processor.pc, 0x0001)
 
 processor.cycle()
 assert.equal(processor.pc, 0x0002)
+
+
+/**
+ * The instruction register should be a
+ * clamped 8-bit wide value.
+ */
+processor.ir = 0x00A0
+assert.equal(processor.ir, 0x00A0)
+
+processor.ir = 0x0100
+assert.equal(processor.ir, 0x0000)

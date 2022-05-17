@@ -69,4 +69,19 @@ export class Processor {
   public set pc(value: number) {
     this.registers[0] = nibble(value)
   }
+
+  /**
+   * The instruction register as a 8-bit clamped value.
+   */
+  public get ir(): number {
+    return byte(this.registers[1])
+  }
+
+  /**
+   * Sets the instruction register value.
+   * - The provided value will be clamped by 8-bits.
+   */
+  public set ir(value: number) {
+    this.registers[1] = byte(value)
+  }
 }
