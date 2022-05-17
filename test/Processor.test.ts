@@ -132,6 +132,20 @@ processor.out = 0x0100
 assert.equal(processor.out, 0x0000)
 
 
+/**
+ * The output register should receive the value
+ * stored on the accumulator register.
+ */
+processor.pc = 0x0000
+processor.write(0x0000, 0x001A)
+processor.write(0x0001, 0x0040)
+processor.write(0x000A, 0x00FF)
+
+processor.cycle()
+processor.cycle()
+assert.equal(processor.out, 0x00FF)
+
+
 /*********************************************************/
 /*********************** END TESTS ***********************/
 /*********************************************************/
