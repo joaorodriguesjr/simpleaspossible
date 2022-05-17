@@ -26,6 +26,13 @@ export class Processor {
   }
 
   /**
+   * Executes a machine cycle.
+   */
+  public cycle(): void {
+    this.pc = this.pc + 1
+  }
+
+  /**
    * Reads one of the 16 bytes of the memory.
    * - The provided address value will be clamped by 4-bits.
    *

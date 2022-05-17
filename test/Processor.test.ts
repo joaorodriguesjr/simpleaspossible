@@ -22,3 +22,16 @@ assert.equal(processor.read(0x0002), 0x0000)
 
  processor.pc = 0x0010
  assert.equal(processor.pc, 0x0000)
+
+
+ /**
+  * The program counter shoud be incremented by 1
+  * after each sucessful cycle.
+  */
+ processor.pc  = 0x0000
+
+ processor.cycle()
+ assert.equal(processor.pc, 0x0001)
+
+ processor.cycle()
+ assert.equal(processor.pc, 0x0002)
