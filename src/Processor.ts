@@ -36,6 +36,7 @@ export class Processor {
       { mnemonic: 'NOP', execute: () => {            } },
       { mnemonic: 'LDA', execute: () => { this.lda() } },
       { mnemonic: 'ADD', execute: () => { this.add() } },
+      { mnemonic: 'SUB', execute: () => { this.sub() } },
     ]
   }
 
@@ -63,6 +64,13 @@ export class Processor {
    */
   public add(): void {
     this.acc += this.read(lo(this.ir))
+  }
+
+  /**
+   * Subtracts a memory stored value from the accumulator
+   */
+  public sub(): void {
+    this.acc -= this.read(lo(this.ir))
   }
 
   /**
