@@ -21,7 +21,7 @@ export class Memory {
   }
 
   /**
-   * Reads one of 1 byte of the memory.
+   * Reads 1 byte of the memory.
    * - The provided address should be in the capacity range.
    *
    * @param address n-bit wide address
@@ -32,7 +32,7 @@ export class Memory {
   }
 
   /**
-   * Writes one of 1 byte of the memory.
+   * Writes 1 byte of the memory.
    * - The provided address should be in the capacity range.
    * - The provided value will be clamped by 8-bits.
    *
