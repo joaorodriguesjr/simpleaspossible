@@ -160,10 +160,3 @@ processor.cycle()
 processor.cycle()
 assert.equal(processor.pc, 0x0001)
 assert.ok(processor.halted)
-
-
-/*********************************************************/
-/*********************** END TESTS ***********************/
-/*********************************************************/
-console.info('SUCCESS: ALL TESTS PASSED!!!')
-process.exit(0)
