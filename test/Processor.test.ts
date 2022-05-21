@@ -1,16 +1,9 @@
 import assert from 'node:assert/strict'
+import { Memory } from '../src/Memory'
 import { Processor } from '../src/Processor'
 
-const processor = new Processor()
-
-/**
- * Should write and read a clamped 8-bit value from the memory.
- */
-processor.write(0x0001, 0x000A)
-assert.equal(processor.read(0x0001), 0x000A)
-
-processor.write(0x0002, 0x0100)
-assert.equal(processor.read(0x0002), 0x0000)
+const memory = new Memory(0x0A)
+const processor = new Processor(memory)
 
 
 /**
@@ -29,8 +22,8 @@ assert.equal(processor.pc, 0x0000)
  * after each sucessful cycle.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x0040)
-processor.write(0x0001, 0x0040)
+memory.write(0x0000, 0x0040)
+memory.write(0x0001, 0x0040)
 
 processor.cycle()
 assert.equal(processor.pc, 0x0001)
@@ -55,8 +48,8 @@ assert.equal(processor.ir, 0x0000)
  * of the memory address pointed by the program counter.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x0040)
-processor.write(0x0001, 0x0040)
+memory.write(0x0000, 0x0040)
+memory.write(0x0001, 0x0040)
 
 processor.cycle()
 assert.equal(processor.ir, 0x0040)
@@ -82,8 +75,8 @@ assert.equal(processor.acc, 0x0000)
  * the instruction register.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x001A)
-processor.write(0x000A, 0x00FF)
+memory.write(0x0000, 0x001A)
+memory.write(0x000A, 0x00FF)
 
 processor.cycle()
 assert.equal(processor.acc, 0x00FF)
@@ -95,10 +88,10 @@ assert.equal(processor.acc, 0x00FF)
  * nibble of the instruction register.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x001A)
-processor.write(0x0001, 0x002B)
-processor.write(0x000A, 0x000F)
-processor.write(0x000B, 0x00F0)
+memory.write(0x0000, 0x001A)
+memory.write(0x0001, 0x002B)
+memory.write(0x000A, 0x000F)
+memory.write(0x000B, 0x00F0)
 
 processor.cycle()
 processor.cycle()
@@ -111,10 +104,10 @@ assert.equal(processor.acc, 0x00FF)
  * nibble of the instruction register.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x001A)
-processor.write(0x0001, 0x003B)
-processor.write(0x000A, 0x000F)
-processor.write(0x000B, 0x0005)
+memory.write(0x0000, 0x001A)
+memory.write(0x0001, 0x003B)
+memory.write(0x000A, 0x000F)
+memory.write(0x000B, 0x0005)
 
 processor.cycle()
 processor.cycle()
@@ -137,9 +130,9 @@ assert.equal(processor.out, 0x0000)
  * stored on the accumulator register.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x001A)
-processor.write(0x0001, 0x0040)
-processor.write(0x000A, 0x00FF)
+memory.write(0x0000, 0x001A)
+memory.write(0x0001, 0x0040)
+memory.write(0x000A, 0x00FF)
 
 processor.cycle()
 processor.cycle()
@@ -151,9 +144,9 @@ assert.equal(processor.out, 0x00FF)
  * halting the processor.
  */
 processor.pc = 0x0000
-processor.write(0x0000, 0x0000)
-processor.write(0x0001, 0x0040)
-processor.write(0x0001, 0x0040)
+memory.write(0x0000, 0x0000)
+memory.write(0x0001, 0x0040)
+memory.write(0x0001, 0x0040)
 
 processor.cycle()
 processor.cycle()

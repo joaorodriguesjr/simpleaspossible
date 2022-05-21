@@ -1,4 +1,5 @@
 import { byte, nibble, hi, lo } from './helpers'
+import { Memory } from './Memory'
 
 /**
  * The SAP-1 central processing unit.
@@ -8,7 +9,7 @@ export class Processor {
   /**
    * The cpu memory.
    */
-  private memory: number[]
+  private memory: Memory
 
   /**
    * The registers memory.
@@ -31,9 +32,10 @@ export class Processor {
    * - Creates the memory with zeroed 16-bytes.
    * - Creates the mapped instruction set.
    */
-  public constructor() {
+  public constructor(memory: Memory) {
     this.registers = new Array(4).fill(0)
-    this.memory = new Array(16).fill(0)
+
+    this.memory = memory
 
     this.halted = false
 
@@ -53,7 +55,7 @@ export class Processor {
     if (this.halted)
       return
 
-    this.ir = this.read(this.pc)
+    this.ir = this.memory.read(this.pc)
 
     const operation = this.operations[this.opcode()]
     operation()
@@ -65,21 +67,21 @@ export class Processor {
    * Loads the accumulator with a value stored on the memory
    */
   public LDA(): void {
-    this.acc = this.read(this.address())
+    this.acc = this.memory.read(this.address())
   }
 
   /**
    * Adds a memory stored value to the accumulator
    */
   public ADD(): void {
-    this.acc += this.read(this.address())
+    this.acc += this.memory.read(this.address())
   }
 
   /**
    * Subtracts a memory stored value from the accumulator
    */
   public SUB(): void {
-    this.acc -= this.read(this.address())
+    this.acc -= this.memory.read(this.address())
   }
 
   /**
@@ -112,29 +114,6 @@ export class Processor {
    */
   public address(): number {
     return lo(this.ir)
-  }
-
-  /**
-   * Reads one of the 16 bytes of the memory.
-   * - The provided address value will be clamped by 4-bits.
-   *
-   * @param address 4-bit wide address
-   * @returns 8-bit wide value
-   */
-  public read(address: number): number {
-    return byte(this.memory[nibble(address)])
-  }
-
-  /**
-   * Writes one of the 16 bytes of the memory.
-   * - The provided address value will be clamped by 4-bits.
-   * - The provided value will be clamped by 8-bits.
-   *
-   * @param address 4-bit wide address
-   * @param value 8-bit wide value
-   */
-  public write(address: number, value: number): void {
-    this.memory[nibble(address)] = byte(value)
   }
 
   /**
