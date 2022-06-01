@@ -6,3 +6,9 @@ architecture virtual machine with the purpose of understand how a CPU works unde
 ```sh
 npm "install" && npm "test"
 ```
+
+### Run a simple machine code written program
+
+```sh
+npm "install" && npm "start"
+```

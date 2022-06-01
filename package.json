@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "test": "sh ./scripts/tests.sh"
+    "test": "sh ./scripts/tests.sh",
+    "start": "ts-node src/main.ts"
   },
   "devDependencies": {
     "nodemon": "^2.0.16",
