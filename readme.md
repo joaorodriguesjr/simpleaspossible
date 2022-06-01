@@ -12,3 +12,12 @@ npm "install" && npm "test"
 ```sh
 npm "install" && npm "start"
 ```
+
+### Main memory state on "src/main.ts" example
+
+```
+  1a 2a 2a 40
+  00 00 00 00
+  00 00 05 00
+  00 00 00 00
+```
