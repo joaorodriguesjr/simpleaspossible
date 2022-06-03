@@ -6,6 +6,7 @@ architecture virtual machine with the purpose of understand how a CPU works unde
 ```sh
 npm "install" && npm "test"
 ```
+![Unit Tests](https://github.com/joaorodriguesjr/simpleaspossible/actions/workflows/test.yml/badge.svg)
 
 ### Run a simple machine code written program
 
