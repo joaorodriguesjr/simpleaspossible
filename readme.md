@@ -13,6 +13,7 @@ npm "install" && npm "test"
 ```sh
 npm "install" && npm "start"
 ```
+![Simple Program](https://github.com/joaorodriguesjr/simpleaspossible/actions/workflows/start.yml/badge.svg)
 
 ### Main memory state on "src/main.ts" example
 
